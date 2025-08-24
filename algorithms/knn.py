@@ -9,12 +9,13 @@ class KNNClassifier:
         self.X_test = np.array(X_test)
         self.y_test = np.array(y_test)
 
-        # Compute for k
-        total_data_points_num = len(X_train) + len(X_test)
+        # Compute k using only training data to avoid peeking at the test set
+        total_data_points_num = len(X_train)
         k = int(np.sqrt(total_data_points_num))
 
+        # Ensure k is odd and does not exceed the number of training samples
         if k % 2 == 0:
-            k = k + 1 if k + 1 < total_data_points_num else k - 1
+            k = k + 1 if k + 1 <= total_data_points_num else k - 1
         self.k = k
 
     # Euclidean distance of query point and each training sample
